@@ -2,21 +2,32 @@ import streamlit as st
 import joblib
 import nltk
 import string
+import os
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
-# Load model and vectorizer
-model = joblib.load('spam_classifier_model.pkl')
-vectorizer = joblib.load('vectorizer.pkl')
 
-# Download NLTK resources (only needed first time)
-nltk.download('punkt')
-nltk.download('stopwords')
+nltk_data_dir = os.path.join(os.path.expanduser("~"), "nltk_data")
+if not os.path.exists(nltk_data_dir):
+    os.makedirs(nltk_data_dir)
+nltk.data.path.append(nltk_data_dir)
 
-# Initialize stemmer
+
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt', download_dir=nltk_data_dir)
+
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords', download_dir=nltk_data_dir)
+
+
 ps = PorterStemmer()
 
-# Function to preprocess text (same as in your Jupyter notebook)
+
+
 def transform_text(text):
     text = text.lower()
     text = nltk.word_tokenize(text)
@@ -42,7 +53,6 @@ def transform_text(text):
     return " ".join(y)
 
 
-# Streamlit UI
 st.set_page_config(page_title="Email Spam Classifier", page_icon="📧", layout="centered")
 
 st.markdown(
@@ -53,34 +63,27 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# User input
 input_sms = st.text_area("✉️ Enter the message you want to check:")
 
 if st.button("🔍 Predict"):
     if input_sms.strip() == "":
         st.warning("Please enter a message first!")
     else:
-        # 1. Preprocess
         transformed_sms = transform_text(input_sms)
 
-        # 2. Vectorize
         vector_input = vectorizer.transform([transformed_sms])
 
-        # 3. Predict
         result = model.predict(vector_input)[0]
 
-        # 4. Display result
         if result == 1:
             st.error("🚨 This message is **SPAM**!")
         else:
             st.success("✅ This message is **NOT SPAM**!")
 
-        # Optional: Show cleaned text
         with st.expander("See processed message"):
             st.write(transformed_sms)
 
 
-# Footer
 st.markdown(
     """
     <hr>
@@ -88,3 +91,4 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
