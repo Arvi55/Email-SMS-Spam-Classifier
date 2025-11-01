@@ -1,37 +1,90 @@
 import streamlit as st
 import joblib
-import numpy as np
+import nltk
+import string
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
 
-# Load saved model and vectorizer
+# Load model and vectorizer
 model = joblib.load('spam_classifier_model.pkl')
 vectorizer = joblib.load('vectorizer.pkl')
 
-# Streamlit UI setup
-st.set_page_config(page_title="Email/SMS Spam Classifier", page_icon="📩", layout="centered")
+# Download NLTK resources (only needed first time)
+nltk.download('punkt')
+nltk.download('stopwords')
 
-st.title("📩 Email/SMS Spam Classifier")
-st.markdown("### Classify your messages instantly using Machine Learning!")
+# Initialize stemmer
+ps = PorterStemmer()
 
-st.write("Type or paste a message below to check if it's spam or not:")
+# Function to preprocess text (same as in your Jupyter notebook)
+def transform_text(text):
+    text = text.lower()
+    text = nltk.word_tokenize(text)
 
-# Text input area
-user_input = st.text_area("Enter your message here:")
+    y = []
+    for i in text:
+        if i.isalnum():
+            y.append(i)
 
-# Predict button
-if st.button("Predict"):
-    if user_input.strip() == "":
-        st.warning("⚠️ Please enter a message before predicting.")
+    text = y[:]
+    y.clear()
+
+    for i in text:
+        if i not in stopwords.words('english') and i not in string.punctuation:
+            y.append(i)
+
+    text = y[:]
+    y.clear()
+
+    for i in text:
+        y.append(ps.stem(i))
+
+    return " ".join(y)
+
+
+# Streamlit UI
+st.set_page_config(page_title="Email Spam Classifier", page_icon="📧", layout="centered")
+
+st.markdown(
+    """
+    <h1 style='text-align: center; color: #6C63FF;'>📧 Email / SMS Spam Classifier</h1>
+    <p style='text-align: center; color: grey;'>Detect whether a message is Spam or Not Spam using Machine Learning</p>
+    """,
+    unsafe_allow_html=True,
+)
+
+# User input
+input_sms = st.text_area("✉️ Enter the message you want to check:")
+
+if st.button("🔍 Predict"):
+    if input_sms.strip() == "":
+        st.warning("Please enter a message first!")
     else:
-        # Transform and predict
-        input_features = vectorizer.transform([user_input])
-        prediction = model.predict(input_features)[0]
-        probability = model.predict_proba(input_features)[0]
+        # 1. Preprocess
+        transformed_sms = transform_text(input_sms)
 
-        # Display result
-        if prediction == 1:
-            st.error(f"🚨 This message is classified as **SPAM**! (Confidence: {np.max(probability)*100:.2f}%)")
+        # 2. Vectorize
+        vector_input = vectorizer.transform([transformed_sms])
+
+        # 3. Predict
+        result = model.predict(vector_input)[0]
+
+        # 4. Display result
+        if result == 1:
+            st.error("🚨 This message is **SPAM**!")
         else:
-            st.success(f"✅ This message is **NOT SPAM**. (Confidence: {np.max(probability)*100:.2f}%)")
+            st.success("✅ This message is **NOT SPAM**!")
 
-st.markdown("---")
-st.caption("Built with ❤️ by Avinash using Streamlit & Machine Learning")
+        # Optional: Show cleaned text
+        with st.expander("See processed message"):
+            st.write(transformed_sms)
+
+
+# Footer
+st.markdown(
+    """
+    <hr>
+    <p style='text-align: center; color: #888;'>Made with ❤️ by Avinash</p>
+    """,
+    unsafe_allow_html=True,
+)
