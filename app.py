@@ -19,9 +19,15 @@ except LookupError:
     nltk.download('punkt', download_dir=nltk_data_dir)
 
 try:
+    nltk.data.find('tokenizers/punkt_tab')
+except LookupError:
+    nltk.download('punkt_tab', download_dir=nltk_data_dir)
+
+try:
     nltk.data.find('corpora/stopwords')
 except LookupError:
     nltk.download('stopwords', download_dir=nltk_data_dir)
+
 
 
 ps = PorterStemmer()
@@ -91,4 +97,5 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
 
