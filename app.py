@@ -32,6 +32,8 @@ except LookupError:
 
 ps = PorterStemmer()
 
+model = joblib.load("spam_classifier_model.pkl")
+vectorizer = joblib.load("vectorizer.pkl")
 
 
 def transform_text(text):
@@ -97,5 +99,6 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
 
 
