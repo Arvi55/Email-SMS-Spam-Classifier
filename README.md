@@ -1,6 +1,8 @@
 # 📧 Spam Email Classifier using Machine Learning  
 
-🚀 **Live Project:** [Click Here to Try the Spam Classifier](https://email-sms-spam-classifier-avinash.streamlit.app/)  
+🚀 **Live Project:** [Click Here to Try the Spam Classifier](https://email-sms-spam-classifier-avinash.streamlit.app/) 
+
+![Web Face](https://github.com/Arvi55/Email-SMS-Spam-Classifier/blob/main/images/web%20face.png?raw=true)
 
 ---
 
