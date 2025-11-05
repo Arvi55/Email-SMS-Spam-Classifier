@@ -80,9 +80,9 @@ Evaluation metrics such as Accuracy, Precision and Confusion Matrix were used to
 
 | Model | Accuracy | Precision |
 |--------|-----------|------------|
-| GaussianNB | 90.03% | 0.60 | 
-| MultinomialNB | **95.55%** | **1.00** | 
-| BernoulliNB | 93.12% | 0.91 | 
+| GaussianNB | 90.03% |60% | 
+| MultinomialNB | **99.81%** | **99.91%** | 
+| BernoulliNB | 99.81% | 99.90% | 
 
 **Multinomial Naive Bayes** performed best, achieving the highest accuracy and perfect precision, making it ideal for text-based spam detection.
 
