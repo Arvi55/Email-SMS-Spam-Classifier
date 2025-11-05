@@ -92,8 +92,6 @@ Evaluation metrics such as Accuracy, Precision and Confusion Matrix were used to
 
 The confusion matrix highlights the number of correctly and incorrectly classified samples for each class.
 
-![Confusion Matrix]()
-
 **Interpretation:**
 - **True Positives (TP):** Spam messages correctly identified as spam  
 - **True Negatives (TN):** Ham messages correctly identified as ham  
@@ -108,8 +106,32 @@ The confusion matrix highlights the number of correctly and incorrectly classifi
 - Ham messages are typically shorter and more conversational.  
 - False negatives (missed spam) are more critical in real-world scenarios, as they can lead to phishing or scams.  
 - Using a larger, more diverse dataset significantly improves real-world performance.
-![most common word]()
-![top 30 words]()
+
+<table align="center">
+  <tr>
+    <th align="center">Spam Words</th>
+    <th align="center">Ham Words</th>
+  </tr>
+  <tr>
+    <td align="center"><img src="images/spam words.png" width="400px"></td>
+    <td align="center"><img src="images/ham words.png" width="400px"></td>
+  </tr>
+</table>
+
+<br>
+
+<table align="center">
+  <tr>
+    <th align="center">Top 30 Spam Words</th>
+    <th align="center">Top 30 Ham Words</th>
+  </tr>
+  <tr>
+    <td align="center"><img src="images/top 30 spam words .png" width="400px"></td>
+    <td align="center"><img src="images/top 30 ham words.png" width="400px"></td>
+  </tr>
+</table>
+
+
 
 
 ---
