@@ -139,8 +139,8 @@ The confusion matrix highlights the number of correctly and incorrectly classifi
 ## 🚀 Final Results
 
 - **Best Model:** Multinomial Naive Bayes  
-- **Accuracy:** 95.55%  
-- **Precision:** 100%  
+- **Accuracy:** 99.81%  
+- **Precision:** 99.91%  
 - **Frameworks Used:** Scikit-learn, NLTK, Pandas  
 - **Development Environment:** Google Colab  
 
