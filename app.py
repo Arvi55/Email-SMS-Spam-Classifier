@@ -95,10 +95,11 @@ if st.button("🔍 Predict"):
 st.markdown(
     """
     <hr>
-    <p style='text-align: center; color: #888;'>Made with ❤️ by Avinash</p>
+    <p style='text-align: center; color: #888;'>Made with ❤️</p>
     """,
     unsafe_allow_html=True,
 )
+
 
 
 
